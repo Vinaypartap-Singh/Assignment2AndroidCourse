@@ -2,28 +2,29 @@ package com.vinay.assignment2
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vinay.assignment2.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+
+        // Initialize view binding
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
 
-        val username = findViewById<EditText>(R.id.etUsername)
-        val password = findViewById<EditText>(R.id.etPassword)
-        val loginBtn = findViewById<Button>(R.id.btnLogin)
-        val backBtn = findViewById<Button>(R.id.btnBack)
-
-        loginBtn.setOnClickListener {
-            val user = username.text.toString().trim()
-            val pass = password.text.toString().trim()
+        // Login button click
+        binding.btnLogin.setOnClickListener {
+            val user = binding.etUsername.text.toString().trim()
+            val pass = binding.etPassword.text.toString().trim()
 
             if (user.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -34,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
                     .get()
                     .addOnSuccessListener { documents ->
                         if (!documents.isEmpty) {
-                            // Login success
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, WelcomeActivity::class.java))
                         } else {
@@ -47,7 +47,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        backBtn.setOnClickListener {
+        // Back button click
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }

@@ -3,43 +3,52 @@ package com.vinay.assignment2
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.vinay.assignment2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    // Step 1: Declare binding variable
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        enableEdgeToEdge()
+
+        // Step 2: Inflate layout using binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Step 3: Handle window insets
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Button navigation
-        findViewById<Button>(R.id.btnSignup).setOnClickListener {
+        // Step 4: Use binding to access views
+        binding.btnSignup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnLogin).setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-        findViewById<Button>(R.id.btnSignup2).setOnClickListener {
+        binding.btnSignup2.setOnClickListener {
             startActivity(Intent(this, Signup2Activity::class.java))
         }
 
-        findViewById<Button>(R.id.btnLogin2).setOnClickListener {
+        binding.btnLogin2.setOnClickListener {
             startActivity(Intent(this, Login2Activity::class.java))
         }
 
-        findViewById<Button>(R.id.btnUpdates).setOnClickListener {
-            val githubUrl = "https://github.com/your-repo" // Replace with actual repo
+        binding.btnUpdates.setOnClickListener {
+            val githubUrl = "https://github.com/Vinaypartap-Singh/Assignment2AndroidCourse"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
             startActivity(intent)
         }

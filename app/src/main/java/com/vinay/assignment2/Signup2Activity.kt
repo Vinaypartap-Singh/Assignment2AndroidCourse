@@ -2,32 +2,33 @@ package com.vinay.assignment2
 
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vinay.assignment2.databinding.ActivitySignup2Binding
 
 class Signup2Activity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var binding: ActivitySignup2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup2)
 
+        // Step 1: Inflate binding
+        binding = ActivitySignup2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Step 2: Initialize Firestore
         db = FirebaseFirestore.getInstance()
 
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
-        val confirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
-        val signupBtn = findViewById<Button>(R.id.btnSignup2)
-        val backBtn = findViewById<Button>(R.id.btnBack)
+        // Step 3: Handle signup
+        binding.btnSignup2.setOnClickListener {
+            val emailText = binding.etEmail.text.toString().trim()
+            val passwordText = binding.etPassword.text.toString().trim()
+            val confirmText = binding.etConfirmPassword.text.toString().trim()
 
-        signupBtn.setOnClickListener {
-            val emailText = email.text.toString().trim()
-            val passwordText = password.text.toString().trim()
-            val confirmText = confirmPassword.text.toString().trim()
-
-            // 🔍 Email & password validation
+            // Validate password format
             val passwordPattern = Regex("^(?=.*[A-Z])(?=.*[@#\$%^&+=!]).{8,15}$")
 
             if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
@@ -53,7 +54,8 @@ class Signup2Activity : AppCompatActivity() {
             }
         }
 
-        backBtn.setOnClickListener {
+        // Step 4: Handle back button
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }

@@ -2,28 +2,30 @@ package com.vinay.assignment2
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vinay.assignment2.databinding.ActivityLogin2Binding
 
 class Login2Activity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var binding: ActivityLogin2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login2)
 
+        // Step 1: Inflate the binding layout
+        binding = ActivityLogin2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Step 2: Initialize Firestore
         db = FirebaseFirestore.getInstance()
 
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
-        val loginBtn = findViewById<Button>(R.id.btnLogin2)
-        val backBtn = findViewById<Button>(R.id.btnBack)
-
-        loginBtn.setOnClickListener {
-            val emailText = email.text.toString().trim()
-            val passwordText = password.text.toString().trim()
+        // Step 3: Handle login button click
+        binding.btnLogin2.setOnClickListener {
+            val emailText = binding.etEmail.text.toString().trim()
+            val passwordText = binding.etPassword.text.toString().trim()
 
             if (emailText.isEmpty() || passwordText.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -46,7 +48,8 @@ class Login2Activity : AppCompatActivity() {
             }
         }
 
-        backBtn.setOnClickListener {
+        // Step 4: Handle back button
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }
