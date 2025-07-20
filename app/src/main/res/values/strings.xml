@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Assignment2</string>
+    <string name="facebook_app_id">752910887251508</string>
+    <string name="facebook_client_token">0dea07889f77e2fdcae6997ff8b4fcaa</string>
 </resources>

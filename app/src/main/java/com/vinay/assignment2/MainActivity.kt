@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, Login2Activity::class.java))
         }
 
+        binding.btnFacebookLogin.setOnClickListener {
+            val intent = Intent(this, FacebookLogin::class.java)
+            startActivity(intent)
+        }
+
         binding.btnUpdates.setOnClickListener {
             val githubUrl = "https://github.com/Vinaypartap-Singh/Assignment2AndroidCourse"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
